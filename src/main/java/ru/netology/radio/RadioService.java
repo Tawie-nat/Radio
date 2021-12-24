@@ -23,7 +23,7 @@ public class RadioService {
         if (currentRadioStation == 9){
             return;
         }
-        currentRadioStation ++;
+        currentRadioStation = currentRadioStation + 1;
     }
 
     public void setCurrentRadioStationWithNextButtonIf9() {
@@ -36,7 +36,7 @@ public class RadioService {
         if (currentRadioStation == 0){
             return;
         }
-        currentRadioStation --;
+        currentRadioStation = currentRadioStation -1;
     }
 
     public void setCurrentRadioStationWithPrevButtonIf0() {
@@ -66,7 +66,7 @@ public class RadioService {
         if (currentSoundVolume == 10){
             return;
         }
-        currentSoundVolume ++;
+        currentSoundVolume = currentSoundVolume + 1;
     }
 
     public void setCurrentSoundVolumeWithNextButtonIf10() {
@@ -79,7 +79,7 @@ public class RadioService {
         if (currentSoundVolume == 0){
             return;
         }
-        currentSoundVolume --;
+        currentSoundVolume = currentSoundVolume - 1;
     }
 
     public void setCurrentSoundVolumeWithPrevButtonIf0() {

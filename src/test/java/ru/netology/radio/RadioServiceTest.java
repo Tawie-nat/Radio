@@ -8,13 +8,33 @@ public class RadioServiceTest {
     RadioService radio = new RadioService();
 
     @Test
-    public void setCurrentRadioStation() {
+    public void ifBetween0and9SetCurrentRadioStation() {
         radio.setCurrentRadioStation(5);
 
         int actual = radio.getCurrentRadioStation();
         int expected = 5;
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void ifBellow0SetCurrentRadioStation0() {
+        radio.setCurrentRadioStation(-1);
+
+        int actual = radio.getCurrentRadioStation();
+        int expected = 0;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void ifUpper9SetCurrentRadioStation0() {
+        radio.setCurrentRadioStation(10);
+
+        int actual = radio.getCurrentRadioStation();
+        int expected = 0;
+        assertEquals(expected, actual);
+    }
+
+
 
     @Test
     public void shouldSetCurrentRadioStationUsingNextButtonIfBetween0And8() {
@@ -78,14 +98,30 @@ public class RadioServiceTest {
 
 
 
+    @Test
+    public void if11SetCurrentSoundVolume0() {
+        radio.setCurrentSoundVolume(11);
 
+        int actual = radio.getCurrentSoundVolume();
+        int expected = 0;
+        assertEquals(expected, actual);
+    }
 
     @Test
-    public void setCurrentSoundVolume() {
+    public void ifBetween0And10SetCurrentSoundVolume() {
         radio.setCurrentSoundVolume(9);
 
         int actual = radio.getCurrentSoundVolume();
         int expected = 9;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void ifBellow0SetCurrentSoundVolume() {
+        radio.setCurrentSoundVolume(-1);
+
+        int actual = radio.getCurrentSoundVolume();
+        int expected = 0;
         assertEquals(expected, actual);
     }
 
