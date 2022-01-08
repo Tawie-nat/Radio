@@ -5,186 +5,192 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RadioServiceTest {
-    RadioService radio = new RadioService();
+
+
 
     @Test
-    public void ifBetween0and9SetCurrentRadioStation() {
-        radio.setCurrentRadioStation(5);
+    public void ifBetweenMinAndMaxStationSetCurrentStation() {
+        RadioService radio = new RadioService();
+        radio.setLastStation();
+        radio.setCurrentStation(7);
+        assertEquals(7, radio.getCurrentStation());
 
-        int actual = radio.getCurrentRadioStation();
-        int expected = 5;
-        assertEquals(expected, actual);
+        RadioService radio1 = new RadioService("radio-test", 16, 80  );
+        radio1.setLastStation();
+        radio1.setCurrentStation(12);
+        assertEquals(12, radio1.getCurrentStation());
     }
 
     @Test
-    public void ifBellow0SetCurrentRadioStation0() {
-        radio.setCurrentRadioStation(-1);
+    public void ifBellowFirstStationSetCurrentStation() {
+        RadioService radio = new RadioService();
+        radio.setCurrentStation(-1);
+        assertEquals(0, radio.getCurrentStation());
 
-        int actual = radio.getCurrentRadioStation();
-        int expected = 0;
-        assertEquals(expected, actual);
+        RadioService radio1 = new RadioService("radio-test", 16, 80  );
+        radio1.setCurrentStation(-4);
+        assertEquals(0, radio1.getCurrentStation());
     }
 
     @Test
-    public void ifUpper9SetCurrentRadioStation0() {
-        radio.setCurrentRadioStation(10);
+    public void ifUnderLastStationSetCurrentStation() {
+        RadioService radio = new RadioService();
+        radio.setLastStation();
+        radio.setCurrentStation(10);
+        assertEquals(0, radio.getCurrentStation());
 
-        int actual = radio.getCurrentRadioStation();
-        int expected = 0;
-        assertEquals(expected, actual);
+        RadioService radio1 = new RadioService("radio-test", 16, 80  );
+        radio1.setLastStation();
+        radio1.setCurrentStation(12);
+        assertEquals(12, radio1.getCurrentStation());
     }
 
 
-
     @Test
-    public void shouldSetCurrentRadioStationUsingNextButtonIfBetween0And8() {
-        // вызов метода установки радиостанции
-        radio.setCurrentRadioStation(7);
-        // вызов метода переключения на следующую радиостанцию (если значение от 0 до 8)
-        radio.setCurrentRadioStationWithNextButton();
-        // вызов метода переключения на следующую радиостанцию (если значение 9)
-        radio.setCurrentRadioStationWithNextButtonIf9 ();
+    public void shouldSetCurrentStationUsingNextButtonIfBellowLastStation() {
+        RadioService radio = new RadioService();
+        radio.setLastStation();
+        radio.setCurrentStation(7);
+        radio.setCurrentStationWithNextButton();
+        assertEquals(8, radio.getCurrentStation());
 
-        // вывод фактического результата вызовом метода get
-        int actual = radio.getCurrentRadioStation();
-        int expected = 8;
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void shouldSetCurrentRadioStationUsingNextButtonIf9() {
-        // вызов метода установки радиостанции
-        radio.setCurrentRadioStation(9);
-        // вызов метода переключения на следующую радиостанцию (если значение от 0 до 8)
-        radio.setCurrentRadioStationWithNextButton();
-        // вызов метода переключения на следующую радиостанцию (если значение 9)
-        radio.setCurrentRadioStationWithNextButtonIf9 ();
-
-        // вывод фактического результата вызовом метода get
-        int actual = radio.getCurrentRadioStation();
-        int expected = 0;
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void shouldSetCurrentRadioStationUsingPrevButtonIfBetween1And9() {
-        // вызов метода установки радиостанции
-        radio.setCurrentRadioStation(6);
-        // вызов метода переключения на предыдущую радиостанцию (если значение от 1 до 9)
-        radio.setCurrentRadioStationWithPrevButton();
-        // вызов метода переключения на следующую радиостанцию (если значение 0)
-        radio.setCurrentRadioStationWithPrevButtonIf0 ();
-
-        // вывод фактического результата вызовом метода get
-        int actual = radio.getCurrentRadioStation();
-        int expected = 5;
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void shouldSetCurrentRadioStationUsingPrevButtonIf0() {
-        // вызов метода установки радиостанции
-        radio.setCurrentRadioStation(0);
-        // вызов метода переключения на предыдущую радиостанцию (если значение от 1 до 9)
-        radio.setCurrentRadioStationWithPrevButton();
-        // вызов метода переключения на следующую радиостанцию (если значение 0)
-        radio.setCurrentRadioStationWithPrevButtonIf0 ();
-
-        // вывод фактического результата вызовом метода get
-        int actual = radio.getCurrentRadioStation();
-        int expected = 9;
-        assertEquals(expected, actual);
+        RadioService radio1 = new RadioService("radio-test", 16, 80  );
+        radio1.setLastStation();
+        radio1.setCurrentStation(11);
+        radio1.setCurrentStationWithNextButton();
+        assertEquals(12, radio1.getCurrentStation());
     }
 
 
-
     @Test
-    public void if11SetCurrentSoundVolume0() {
-        radio.setCurrentSoundVolume(11);
+    public void shouldSetCurrentStationUsingNextButtonIfLastStation() {
+        RadioService radio = new RadioService();
+        radio.setCurrentStation(radio.getLastStation());
+        radio.setCurrentStationWithNextButton();
+        assertEquals(0, radio.getCurrentStation());
 
-        int actual = radio.getCurrentSoundVolume();
-        int expected = 0;
-        assertEquals(expected, actual);
+        RadioService radio1 = new RadioService("radio-test", 16, 80  );
+        radio1.setCurrentStation(radio1.getLastStation());
+        radio1.setCurrentStationWithNextButton();
+        assertEquals(0, radio1.getCurrentStation());
     }
 
     @Test
-    public void ifBetween0And10SetCurrentSoundVolume() {
-        radio.setCurrentSoundVolume(9);
+    public void shouldSetCurrentRadioStationUsingPrevButtonIfUnderFirstStation() {
+        RadioService radio = new RadioService();
+        radio.setLastStation();
+        radio.setCurrentStation (1);
+        radio.setCurrentStationWithPrevButton();
+        assertEquals(0, radio.getCurrentStation());
 
-        int actual = radio.getCurrentSoundVolume();
-        int expected = 9;
-        assertEquals(expected, actual);
+        RadioService radio1 = new RadioService("radio-test", 16, 80  );
+        radio1.setLastStation();
+        radio1.setCurrentStation (8);
+        radio1.setCurrentStationWithPrevButton();
+        assertEquals(7, radio1.getCurrentStation());
     }
 
     @Test
-    public void ifBellow0SetCurrentSoundVolume() {
+    public void shouldSetCurrentStationUsingPrevButtonIfFirstStation() {
+        RadioService radio = new RadioService();
+        radio.setLastStation();
+        radio.setCurrentStation(radio.getFirstStation());
+        radio.setCurrentStationWithPrevButton();
+        assertEquals(9, radio.getCurrentStation());
+
+        RadioService radio1 = new RadioService("radio-test", 16, 80  );
+        radio1.setLastStation();
+        radio1.setCurrentStation(radio1.getFirstStation());
+        radio1.setCurrentStationWithPrevButton();
+        assertEquals(15, radio1.getCurrentStation());
+    }
+
+    @Test
+    public void ifBetweenMinAndMaxVolumeSetCurrentSoundVolume() {
+        RadioService radio = new RadioService();
+        radio.setCurrentSoundVolume(50);
+        assertEquals(50, radio.getCurrentSoundVolume());
+
+        RadioService radio1 = new RadioService("radio-test", 16, 80  );
+        radio1.setCurrentSoundVolume(60);
+        assertEquals(60, radio1.getCurrentSoundVolume());
+    }
+
+    @Test
+    public void ifUnderMaxSetCurrentSoundVolume() {
+        RadioService radio = new RadioService();
+        radio.setCurrentSoundVolume(120);
+        assertEquals(100, radio.getCurrentSoundVolume());
+
+        RadioService radio1 = new RadioService("radio-test", 16, 80  );
+        radio1.setCurrentSoundVolume(100);
+        assertEquals(80, radio1.getCurrentSoundVolume());
+    }
+
+    @Test
+    public void ifBellowMinSetCurrentSoundVolume() {
+        RadioService radio = new RadioService();
         radio.setCurrentSoundVolume(-1);
+        assertEquals(0, radio.getCurrentSoundVolume());
 
-        int actual = radio.getCurrentSoundVolume();
-        int expected = 0;
-        assertEquals(expected, actual);
+        RadioService radio1 = new RadioService("radio-test", 16, 80  );
+        radio1.setCurrentSoundVolume(-8);
+        assertEquals(0, radio1.getCurrentSoundVolume());
     }
 
     @Test
-    public void shouldSetCurrentSoundVolumeUsingNextButtonIfBetween0And9() {
-        // вызов метода установки громкости звука
-        radio.setCurrentSoundVolume(3);
-        // вызов метода переключения на следующий уровень громкости (если значение от 0 до 9)
+    public void shouldSetCurrentSoundVolumeUsingNextButtonIfBellowMax() {
+        RadioService radio = new RadioService();
+        radio.setCurrentSoundVolume(30);
         radio.setCurrentSoundVolumeWithNextButton();
-        // вызов метода переключения на следующий уровень громкости (если значение 10)
-        radio.setCurrentSoundVolumeWithNextButtonIf10 ();
+        assertEquals(31, radio.getCurrentSoundVolume());
 
-        // вывод фактического результата вызовом метода get
-        int actual = radio.getCurrentSoundVolume();
-        int expected = 4;
-        assertEquals(expected, actual);
+        RadioService radio1 = new RadioService("radio-test", 16, 80  );
+        radio1.setCurrentSoundVolume(70);
+        radio1.setCurrentSoundVolumeWithNextButton();
+        assertEquals(71, radio1.getCurrentSoundVolume());
     }
 
     @Test
-    public void shouldSetCurrentSoundVolumeUsingNextButtonIf10() {
-        // вызов метода установки громкости звука
-        radio.setCurrentSoundVolume(10);
-        // вызов метода переключения на следующий уровень громкости (если значение от 0 до 9)
+    public void shouldSetCurrentSoundVolumeUsingNextButtonIfMax() {
+        RadioService radio = new RadioService();
+        radio.setCurrentSoundVolume(radio.getMaxSoundVolume());
         radio.setCurrentSoundVolumeWithNextButton();
-        // вызов метода переключения на следующий уровень громкости (если значение 10)
-        radio.setCurrentSoundVolumeWithNextButtonIf10 ();
+        assertEquals(100, radio.getCurrentSoundVolume());
 
-        // вывод фактического результата вызовом метода get
-        int actual = radio.getCurrentSoundVolume();
-        int expected = 10;
-        assertEquals(expected, actual);
+        RadioService radio1 = new RadioService("radio-test", 16, 80  );
+        radio1.setCurrentSoundVolume(radio1.getMaxSoundVolume());
+        radio1.setCurrentSoundVolumeWithNextButton();
+        assertEquals(80, radio1.getCurrentSoundVolume());
     }
 
     @Test
-    public void shouldSetCurrentSoundVolumeUsingPrevButtonIfBetween1And10() {
-        // вызов метода установки громкости звука
-        radio.setCurrentSoundVolume(2);
-        // вызов метода переключения на предыдущий уровень громкости (если значение от 1 до 10)
+    public void shouldSetCurrentSoundVolumeUsingPrevButtonIfUnderMin() {
+        RadioService radio = new RadioService();
+        radio.setCurrentSoundVolume(60);
         radio.setCurrentSoundVolumeWithPrevButton();
-        // вызов метода переключения на предыдущий уровень громкости (если значение 0)
-        radio.setCurrentSoundVolumeWithPrevButtonIf0 ();
+        assertEquals(59, radio.getCurrentSoundVolume());
 
-        // вывод фактического результата вызовом метода get
-        int actual = radio.getCurrentSoundVolume();
-        int expected = 1;
-        assertEquals(expected, actual);
+        RadioService radio1 = new RadioService("radio-test", 16, 80  );
+        radio1.setCurrentSoundVolume(70);
+        radio1.setCurrentSoundVolumeWithPrevButton();
+        assertEquals(69, radio1.getCurrentSoundVolume());
     }
 
     @Test
-    public void shouldSetCurrentSoundVolumeUsingPrevButtonIf0() {
-        // вызов метода установки громкости звука
-        radio.setCurrentSoundVolume(0);
-        // вызов метода переключения на предыдущий уровень громкости (если значение от 1 до 10)
+    public void shouldSetCurrentSoundVolumeUsingPrevButtonIfMin() {
+        RadioService radio = new RadioService();
+        radio.setCurrentSoundVolume(radio.getMinSoundVolume());
         radio.setCurrentSoundVolumeWithPrevButton();
-        // вызов метода переключения на предыдущий уровень громкости (если значение 0)
-        radio.setCurrentSoundVolumeWithPrevButtonIf0();
+        assertEquals(0, radio.getCurrentSoundVolume());
 
-        // вывод фактического результата вызовом метода get
-        int actual = radio.getCurrentSoundVolume();
-        int expected = 0;
-        assertEquals(expected, actual);
+        RadioService radio1 = new RadioService("radio-test", 16, 80  );
+        radio1.setCurrentSoundVolume(radio1.getMinSoundVolume());
+        radio1.setCurrentSoundVolumeWithPrevButton();
+        assertEquals(0, radio1.getCurrentSoundVolume());
     }
-}
+
+  }
 
 
 

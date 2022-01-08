@@ -1,91 +1,99 @@
 package ru.netology.radio;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class RadioService {
+    private int id;
+    private String name = "Radio-box";
+    private int currentStation = 0;
+    private int firstStation = 0;
+    private int amountStation = 10;
+    private int lastStation = 0;
+    private int currentSoundVolume = 0;
+    private int minSoundVolume = 0;
+    private int maxSoundVolume = 100;
 
-    private int currentRadioStation;
-    private int currentSoundVolume;
 
-    public int getCurrentRadioStation() {
-        return currentRadioStation;
+
+    public RadioService(String name, int amountStation, int maxSoundVolume) {
+        this.name = name;
+        this.amountStation = amountStation;
+        this.maxSoundVolume = maxSoundVolume;
     }
 
-    public void setCurrentRadioStation(int newCurrentRadioStation) {
-        if (newCurrentRadioStation < 0) {
+
+
+    public void setLastStation() {
+        this.lastStation = amountStation -1;
+    }
+
+    public void setCurrentStation(int currentStation) {
+        if (currentStation < firstStation) {
             return;
         }
-        if (newCurrentRadioStation > 9) {
+        if (currentStation > lastStation) {
             return;
         }
-        currentRadioStation = newCurrentRadioStation;
+        this.currentStation = currentStation;
     }
 
-    public void setCurrentRadioStationWithNextButton() {
-        if (currentRadioStation == 9){
-            return;
-        }
-        currentRadioStation = currentRadioStation + 1;
-    }
 
-    public void setCurrentRadioStationWithNextButtonIf9() {
-        if (currentRadioStation == 9) {
-            currentRadioStation = 0;
+    public void setCurrentStationWithNextButton() {
+        if (currentStation == lastStation) {
+            currentStation = firstStation;
+        } else {
+            currentStation = currentStation + 1;
         }
     }
 
-    public void setCurrentRadioStationWithPrevButton() {
-        if (currentRadioStation == 0){
-            return;
-        }
-        currentRadioStation = currentRadioStation -1;
-    }
-
-    public void setCurrentRadioStationWithPrevButtonIf0() {
-        if (currentRadioStation == 0) {
-            currentRadioStation = 9;
+    public void setCurrentStationWithPrevButton() {
+        if (currentStation == firstStation) {
+            currentStation = lastStation;
+        } else {
+            currentStation = currentStation - 1;
         }
     }
-
-
-
 
     public int getCurrentSoundVolume() {
         return currentSoundVolume;
     }
 
-    public void setCurrentSoundVolume(int newCurrentSoundVolume) {
-        if (newCurrentSoundVolume < 0) {
+    public int getMinSoundVolume() {
+        return minSoundVolume;
+    }
+
+    public int getMaxSoundVolume() {
+        return maxSoundVolume;
+    }
+
+    public void setCurrentSoundVolume(int currentSoundVolume) {
+        if (currentSoundVolume < minSoundVolume) {
+            this.currentSoundVolume = minSoundVolume;
             return;
         }
-        if (newCurrentSoundVolume > 10) {
+        if (currentSoundVolume > maxSoundVolume) {
+            this.currentSoundVolume = maxSoundVolume;
             return;
         }
-        currentSoundVolume = newCurrentSoundVolume;
+        this.currentSoundVolume = currentSoundVolume;
     }
 
     public void setCurrentSoundVolumeWithNextButton() {
-        if (currentSoundVolume == 10){
+        if (currentSoundVolume == maxSoundVolume) {
             return;
         }
-        currentSoundVolume = currentSoundVolume + 1;
-    }
-
-    public void setCurrentSoundVolumeWithNextButtonIf10() {
-        if (currentSoundVolume == 10) {
-            currentSoundVolume = 10;
-        }
+        this.currentSoundVolume = currentSoundVolume + 1;
     }
 
     public void setCurrentSoundVolumeWithPrevButton() {
-        if (currentSoundVolume == 0){
+        if (currentSoundVolume == minSoundVolume) {
             return;
         }
         currentSoundVolume = currentSoundVolume - 1;
     }
-
-    public void setCurrentSoundVolumeWithPrevButtonIf0() {
-        if (currentSoundVolume == 0) {
-            currentSoundVolume = 0;
-        }
-    }
-
 }
