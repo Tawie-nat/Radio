@@ -1,5 +1,12 @@
 package ru.netology.radio;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class RadioService {
     private int id;
     private String name = "Radio-box";
@@ -11,9 +18,7 @@ public class RadioService {
     private int minSoundVolume = 0;
     private int maxSoundVolume = 100;
 
-    public RadioService() {
 
-    }
 
     public RadioService(String name, int amountStation, int maxSoundVolume) {
         this.name = name;
@@ -21,30 +26,7 @@ public class RadioService {
         this.maxSoundVolume = maxSoundVolume;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getCurrentStation() {
-        return currentStation;
-    }
-
-    public int getFirstStation() {
-        return firstStation;
-    }
-
-    public int getLastStation() {
-        return lastStation;
-
-    }
 
     public void setLastStation() {
         this.lastStation = amountStation -1;
